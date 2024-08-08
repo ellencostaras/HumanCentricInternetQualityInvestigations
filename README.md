@@ -22,17 +22,17 @@ These are examples of what the ^^ 'test combos creation.ipynb' file has created.
 
 
 ### Exp1WithPacketLoss.sh or Exp1WithoutPacketLoss
-This is a shell script whcich engages the throttle without us necessarily knowing the conditions it has engaged. This is how you run it on a mac (only works if npm and throttle are already installed):
+This is a shell script which engages the throttle without us necessarily knowing the conditions it has engaged. This is how you run it on a mac (only works if npm and throttle are already installed):
 
 #### Step 1: 
 Open terminal app
 
 #### Step 2: 
 Navigate to the folder where you have downloaded all of these files. this can be done by typing something like:
-      ```
-      cd Dektop
-      cd experiment1
-      ```
+```
+cd Desktop
+cd experiment1
+```
 
 #### Step 3: 
 Run the script by typing:
