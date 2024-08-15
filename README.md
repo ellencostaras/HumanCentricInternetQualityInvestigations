@@ -49,8 +49,9 @@ Open terminal app
 ##### Step 2: 
 Navigate to the folder where you have downloaded all of these files. this can be done by typing something like:
 ```
-cd Desktop
-cd experiment1
+cd Documents
+cd GitHub
+cd DesktopDownthrottlingExperiment
 ```
 
 ##### Step 3: 
