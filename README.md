@@ -57,7 +57,7 @@ cd DesktopDownthrottlingExperiment
 ##### Step 3: 
 Run the script by typing:
 ```
-bash Exp1WithPacketLoss
+bash Exp1WithPacketLoss.sh
 ```
 OR
 ```
