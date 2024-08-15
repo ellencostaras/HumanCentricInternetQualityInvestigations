@@ -8,7 +8,8 @@ perform_task() {
     treatment=$((numberEntered + 1))
 
     # Fetch the row from the CSV
-    row=$(awk -F, -v row=$treatment 'NR==row {print $0}' test_combos_shuffled.csv)
+    file_path="./pre_experiment/test_combos_shuffled.csv"
+    row=$(awk -F, -v row=$treatment 'NR==row {print $0}' "$file_path")
 
     if [ -z "$row" ]; then
         echo "Invalid treatment number. Please try again."
