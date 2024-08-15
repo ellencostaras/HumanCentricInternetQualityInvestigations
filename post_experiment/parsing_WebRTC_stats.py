@@ -376,6 +376,14 @@ def align_times(data_dicts_ellen, data_dicts_aadya, verbose=False):
 
 #---------------- Functions which parse, then manipulate, then write data into a CSV ----------------
 
+def parse_all_treatments(parent_file_path, lowest_treatment_number, highest_treatment_number):
+
+    for treatment in range(lowest_treatment_number, highest_treatment_number + 1):
+        select_correct_parser(parent_file_path, treatment)
+
+    print(f"Successfully parsed {highest_treatment_number - lowest_treatment_number + 1} calls.")
+
+
 def select_correct_parser(parent_file_path, treatment_number, verbose=False):
     '''Function which chooses the correct parser depending on which files exist.
     
@@ -389,11 +397,11 @@ def select_correct_parser(parent_file_path, treatment_number, verbose=False):
     aadya_exists = os.path.exists(file_path_aadya)
 
     if ellen_exists and not aadya_exists:
-        return parse_and_convert_to_csv_single_treatment_ellen_only
+        return parse_and_convert_to_csv_single_treatment_ellen_only(parent_file_path, treatment_number, verbose)
     elif aadya_exists and not ellen_exists:
-        return parse_and_convert_to_csv_single_treatment_aadya_only
+        return parse_and_convert_to_csv_single_treatment_aadya_only(parent_file_path, treatment_number, verbose)
     elif ellen_exists and aadya_exists:
-        return parse_and_convert_to_csv_single_treatment_ellen_only
+        return parse_and_convert_to_csv_single_treatment(parent_file_path, treatment_number, verbose)
     else:
         print(f"Treatment {treatment_number} had no acceptable data to parse")
 
@@ -428,7 +436,7 @@ def parse_and_convert_to_csv_single_treatment(parent_file_path, treatment_number
             print("NEW", key, ":", val, "\n")
 
     dict_names = ["Inbound Video", "Inbound Audio", "Outbound Video", "Remote Inbound Video", "Remote Inbound Audio", "Remote Outbound Audio", "Source Video", "Audio Playback"]
-    output_file = f"treatment{treatment_number}_13Aug.csv"
+    output_file = f"treatment{treatment_number}.csv"
     with open(output_file, mode='w', newline='') as csv_file:
         writer = csv.writer(csv_file)
 
@@ -456,7 +464,7 @@ def parse_and_convert_to_csv_single_treatment_ellen_only(parent_file_path, treat
     all_ellens_data, extra = align_times(all_ellens_data_unaligned, [], verbose)
     
     dict_names = ["Inbound Video", "Inbound Audio", "Outbound Video", "Remote Inbound Video", "Remote Inbound Audio", "Remote Outbound Audio", "Source Video", "Audio Playback"]
-    output_file = f"treatment{treatment_number}_13Aug_ellen_only.csv"
+    output_file = f"treatment{treatment_number}_ellen_only.csv"
     with open(output_file, mode='w', newline='') as csv_file:
         writer = csv.writer(csv_file)
         for data_dict in range(len(all_ellens_data)):
@@ -480,7 +488,7 @@ def parse_and_convert_to_csv_single_treatment_aadya_only(parent_file_path, treat
     extra, all_aadyas_data = align_times([], all_aadyas_data_unaligned, verbose)
     
     dict_names = ["Inbound Video", "Inbound Audio", "Outbound Video", "Remote Inbound Video", "Remote Inbound Audio", "Remote Outbound Audio", "Source Video", "Audio Playback"]
-    output_file = f"treatment{treatment_number}_13Aug_aadya_only.csv"
+    output_file = f"treatment{treatment_number}_aadya_only.csv"
     with open(output_file, mode='w', newline='') as csv_file:
         writer = csv.writer(csv_file)
         for data_dict in range(len(all_aadyas_data)):
