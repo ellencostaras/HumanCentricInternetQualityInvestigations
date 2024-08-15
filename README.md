@@ -61,7 +61,7 @@ bash Exp1WithPacketLoss.sh
 ```
 OR
 ```
-bash Exp1WithoutPacketLoss
+bash Exp1WithoutPacketLoss.sh
 ```
 You should use "Exp1WithPacketLoss" if the test_combos_shuffled.csv file includes packet loss as a column.
 
