@@ -1,6 +1,6 @@
-# DesktopDownthrottlingExperiment
+# DesktopDownthrottlingExperiment 
 
-Welcome to Experiment 1 of our Honours Project! This is a working space. 
+Welcome to Experiment 1 of our Honours Project! This is a working space. <3
 
 Inside this repository you will find two shell scripts, and two folders: <br><br>
 
