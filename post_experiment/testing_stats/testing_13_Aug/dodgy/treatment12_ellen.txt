@@ -1,0 +1,60 @@
+{
+ "getUserMedia": [
+  {
+   "audio": "{echoCancellation: {ideal: true}, deviceId: {exact: [\"default\"]}, autoGainControl: {ideal: true}, noiseSuppression: {ideal: true}, voiceIsolation: {ideal: false}}",
+   "origin": "https://meet.google.com",
+   "pid": 47696,
+   "request_id": 0,
+   "request_type": "getUserMedia",
+   "rid": 1034,
+   "timestamp": 1723526389516.379
+  },
+  {
+   "origin": "https://meet.google.com",
+   "pid": 47696,
+   "request_id": 1,
+   "request_type": "getUserMedia",
+   "rid": 1034,
+   "timestamp": 1723526389518.252,
+   "video": "{width: {ideal: 1280}, height: {ideal: 720}, deviceId: {exact: [\"35bd9aba00791bbfb6969bc68eb04b591153883d87a91dd5ee4ae3353433e154\"]}, advanced: [{frameRate: {min: 30}}, {height: {min: 720}}, {width: {min: 1280}}, {frameRate: {max: 30}}, {width: {max: 1280}}, {height: {max: 720}}, {aspectRatio: {exact: 1.77778}}]}"
+  },
+  {
+   "audio_track_info": "id:32285b10-b210-4508-9647-574509b28e48 label:Default - MacBook Pro Microphone (Built-in)",
+   "pid": 47696,
+   "request_id": 0,
+   "request_type": "getUserMedia",
+   "rid": 1034,
+   "stream_id": "bed27a87-2d8a-4da8-b92d-de85270e0d3f",
+   "timestamp": 1723526389734.271
+  },
+  {
+   "audio": "{echoCancellation: {exact: false}, latency: {ideal: 0.01}, deviceId: {exact: [\"default\"]}, autoGainControl: {exact: false}, noiseSuppression: {exact: false}, voiceIsolation: {exact: false}}",
+   "origin": "https://meet.google.com",
+   "pid": 47696,
+   "request_id": 2,
+   "request_type": "getUserMedia",
+   "rid": 1034,
+   "timestamp": 1723526389736.769
+  },
+  {
+   "pid": 47696,
+   "request_id": 1,
+   "request_type": "getUserMedia",
+   "rid": 1034,
+   "stream_id": "88fcd430-06a0-445f-a1db-16098b291ad4",
+   "timestamp": 1723526390891.301,
+   "video_track_info": "id:7a15d6bf-fc36-49b6-a258-82d43020bb2f label:FaceTime HD Camera (1C1C:B782)"
+  },
+  {
+   "audio_track_info": "id:77c051ef-33d9-49fa-9c11-7b6ef2410177 label:Default - MacBook Pro Microphone (Built-in)",
+   "pid": 47696,
+   "request_id": 2,
+   "request_type": "getUserMedia",
+   "rid": 1034,
+   "stream_id": "718d10a2-0119-43e0-b568-50ce3ebeb6a3",
+   "timestamp": 1723526391477.425
+  }
+ ],
+ "PeerConnections": {},
+ "UserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+}
