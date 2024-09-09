@@ -15,8 +15,6 @@
  * expectedHeight: number; Resolution of the rendering widget
  * frameRate: number; FrameRate of the video received
  * expectedFrameRate: number; FrameRate of the video source
- * 
- * 
  * The stats object is inputted into the following function to calc MOS score:
 */
 
@@ -85,17 +83,19 @@ function score(stats) {
 
 function normalize(stats) {
   return {
-    audio: stats.audio
-      ? {
+    
+    audio: stats.audio //check if this exists
+    
+      ? {//if it exists, creates a new object defining default values for audio stats
           packetLoss: 0,
           bufferDelay: 50,
           roundTripTime: 50,
           fec: true,
-          ...stats.audio,
+          ...stats.audio, //merges these values with existing values, exisitng values take precedence
         }
-      : undefined,
+      : undefined, //if it doesn't exist then the 'audio property' is set to undef
     video: stats.video
-      ? {
+      ? { //define default values for video stats
           packetLoss: 0,
           bufferDelay: 0,
           roundTripTime: 50,
