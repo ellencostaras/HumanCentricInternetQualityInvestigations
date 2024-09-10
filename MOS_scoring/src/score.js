@@ -24,9 +24,7 @@ function score(stats) {
 
   const { audio, video } = normalize(stats); //uses the norm func (below) to fill-in and normalise missing stats
 
-  //calculate audio score
-  if (audio) {
-    // Audio MOS calculation is based on E-Model algorithm
+  if (audio) { //calculate audio score (Audio MOS calculation is based on E-Model algorithm)
 
     const R0 = 100; //R initially set to 100 as an initial score to decrease from i think?
 
@@ -49,35 +47,49 @@ function score(stats) {
     // Impairment due to Packet Loss:
     const Ipl = Ie + (100 - Ie) * (pl / (pl + Bpl)); //calc based on Ie and packet loss
 
-    // Delay Impairment: // continue from https://chatgpt.com/c/7d4a0b73-f8e0-4b0c-b29d-b69c782a8ef2
+    // Delay Impairment: 
     const Id = delay * 0.03 + (delay > 150 ? 0.1 * (delay - 150) : 0); //Delays greater than 150ms are penalised more (exceeding human reaction time?)
-    const R = clamp(R0 - Ipl - Id, 0, 100); // rating is calculated as 100- impairments due to delay and packetloss. bounded between 0 and 100
+    
+    // Calculating R (rating):
+    const R = clamp(R0 - Ipl - Id, 0, 100); // rating is calculated as 100 - impairments due to delay and packetloss. bounded between 0 and 100
+    
+    // Calculating MOS:
     const MOS = 1 + 0.035 * R + (R * (R - 60) * (100 - R) * 7) / 1000000; //non-linear mapping of R(range 0-100) onto MOS (range 1-5)--> these coefficients are the ones fitted through experiments?
-
     scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5); //round the MOS score to two decimal places, bound between 1 and 5
   }
-  if (video) {
-    const pixels = video.expectedWidth * video.expectedHeight; 
-    //number of pixels as an area of h x w
+
+  if (video) {  // Calculate video score 
+
+    // Pixels:
+    const pixels = video.expectedWidth * video.expectedHeight; //number of pixels as an area of h x w
     //*EDIT THIS* I think this might be supposed to be the actual rather than the expected
+
+    // Increased quality from Codecs:
     const codecFactor = video.codec === 'vp9' ? 1.2 : 1.0; //*EDIT THIS * - add AV1 as a video codec option either more efficient than vp9 or same if we can't find anything
+    
+    // Delay:
     const delay = video.bufferDelay + video.roundTripTime / 2; //delay is calculated by buffer(internal delay) + one way latency(travel delay)
+    
     // These parameters are generated with a logaritmic regression
     // on some very limited test data for now
     // They are based on the bits per pixel per frame (bPPPF)
     if (video.frameRate !== 0) {
+      
       //bits per pixel per frame
       const bPPPF = (codecFactor * video.bitrate) / pixels / video.frameRate; 
+      
       //base score- transform of bits per pixel per frame
       const base = clamp(0.56 * Math.log(bPPPF) + 5.36, 1, 5); 
+      
       //MOS as a function of (base score) - (frame rate underperformance) - (delay)
       const MOS =
         base -
         1.9 * Math.log(video.expectedFrameRate / video.frameRate) -
         delay * 0.002;
       scores.video = clamp(Math.round(MOS * 100) / 100, 1, 5); //round MOS to 2dp in the range 1-5
+    
     } else {
-      scores.video = 1;
+      scores.video = 1; //if frameRate == 0: score is set to 1 (lowest)
     }
   }
   return scores;
@@ -87,7 +99,6 @@ function normalize(stats) {
   return {
     
     audio: stats.audio //check if this exists
-    
       ? {//if it exists, creates a new object defining default values for audio stats
           packetLoss: 0,
           bufferDelay: 50,
@@ -96,6 +107,7 @@ function normalize(stats) {
           ...stats.audio, //merges these values with existing values, exisitng values take precedence
         }
       : undefined, //if it doesn't exist then the 'audio property' is set to undef
+    
     video: stats.video
       ? { //define default values for video stats
           packetLoss: 0,
@@ -109,6 +121,7 @@ function normalize(stats) {
           ...stats.video,
         }
       : undefined,
+  
   };
 }
 
