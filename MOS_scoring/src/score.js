@@ -57,7 +57,9 @@ function score(stats) {
     scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5); //round the MOS score to two decimal places, bound between 1 and 5
   }
   if (video) {
-    const pixels = video.expectedWidth * video.expectedHeight; //number of pixels as an area of h x w
+    const pixels = video.expectedWidth * video.expectedHeight; 
+    //number of pixels as an area of h x w
+    //*EDIT THIS* I think this might be supposed to be the actual rather than the expected
     const codecFactor = video.codec === 'vp9' ? 1.2 : 1.0; //*EDIT THIS * - add AV1 as a video codec option either more efficient than vp9 or same if we can't find anything
     const delay = video.bufferDelay + video.roundTripTime / 2; //delay is calculated by buffer(internal delay) + one way latency(travel delay)
     // These parameters are generated with a logaritmic regression
@@ -66,7 +68,7 @@ function score(stats) {
     if (video.frameRate !== 0) {
       //bits per pixel per frame
       const bPPPF = (codecFactor * video.bitrate) / pixels / video.frameRate; 
-      //base score- transform of bits per pixel epr frame
+      //base score- transform of bits per pixel per frame
       const base = clamp(0.56 * Math.log(bPPPF) + 5.36, 1, 5); 
       //MOS as a function of (base score) - (frame rate underperformance) - (delay)
       const MOS =

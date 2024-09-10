@@ -22,7 +22,6 @@ or
 \"opus (111, minptime=10;sprop-stereo=0;stereo=0;usedtx=1;useinbandfec=1)\"
 so we need to search for the items "usedtx" and "useinbandfec" which aren't always there but when they are there it means they were in use
 -->
-
 ## VIDEO
 * packetLoss (0-100%): The percentage of video packets lost.
 <!-- use the stat "fractionLost" -->
