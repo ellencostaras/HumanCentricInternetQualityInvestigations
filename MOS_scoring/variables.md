@@ -4,7 +4,7 @@
 <!-- use the stat "fractionLost" -->
 <!-- included for remote inbound RIA-->
 * roundTripTime (milliseconds): The roundTripTime defines the degradation of the experience based on the network delay.
-<!--included for remote inbound RIA and remote outbound (ROA6666) audio *DECIDE*-->
+<!--included for remote inbound RIA and remote outbound (ROA6666) audio *DECIDE* -->
 * bitrate (0-200000 bps): The bitrate used for the audio transmission.  Higher bitrates provides better quality.  
 <!--bitrate in bits per second (same unit as the output we already get)-->
 <!--*DECIDE* we could add sent and recieved together apparently? not sure how best to handle this one-->
