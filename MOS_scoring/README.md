@@ -34,7 +34,7 @@ score({
 ```
 
 For audio the relevant input parameters are these ones:
-* packetLoss (0-100%): The percentage of audio packets lost.
+* packetLoss (0-100%): The percentage of audio packets lost. 
 * bitrate (0-200000 bps): The bitrate used for the audio transmission.  Higher bitrates provides better quality. 
 * roundTripTime (milliseconds): The roundTripTime defines the degradation of the experience based on the network delay.
 * bufferDelay (milliseconds): The bufferDelay defines the degradation of the experience based on the delay introudced in reception that in most of the cases will be based on the jitter of the network.

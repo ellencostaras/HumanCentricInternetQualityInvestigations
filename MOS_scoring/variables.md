@@ -1,63 +1,61 @@
 # RTC SCORE
-
-Library to calculate a Mean Opinion Score (MOS) from 1 to 5 for audio and video real time communications.
-
-The current version of the algorithm is based on a modified E-Model approach for audio and logarithmic regression for video based on some limited collected data.  The E-Model is a well known standard and the adaptations for wideband and opus codecs have been taken into account.
-
-## How to use it
-
-### Install
-
-The library can be installed as an npm package dependency in your project:
-
-```
-npm install rtcscore
-```
-
-Given the simplicity of the code in some cases it can be more convenient to copy the code from `src/score.js` even if that prevents the ability to use npm to get upgrades for new versions of the library.
-
-### How to calculate an audio/video score for a stream
-
-The library expose a single API `score()` to generate audio and video scores given some input parameters of the communication.
-
-For example a very basic example could be to generate the score for a give audio packet loss and video bitrate:
-
-```
-score({
-    audio: {
-        packetLoss: 2,     // 2%
-    },
-    video: {
-        bitrate: 200000,   // 200kpbs
-    }
-})
-```
-
-For audio the relevant input parameters are these ones:
-* packetLoss (0-100%): The percentage of audio packets lost.
-* bitrate (0-200000 bps): The bitrate used for the audio transmission.  Higher bitrates provides better quality. 
+## AUDIO
+* packetLoss (0-100%): The percentage of audio packets lost. 
+<!-- use the stat "fractionLost" -->
+<!-- included for remote inbound RIA-->
 * roundTripTime (milliseconds): The roundTripTime defines the degradation of the experience based on the network delay.
+<!--included for remote inbound RIA and remote outbound (ROA6666) audio-->
+* bitrate (0-200000 bps): The bitrate used for the audio transmission.  Higher bitrates provides better quality.  
+<!--bitrate in bits per second (same unit as the output we already get)-->
+<!--we could add sent and recieved together apparently? not sure how best to handle this one-->
+<!-- bytesReceived_in_bits/s included for inbound IT01A6666, bytesSent_in_bits/s included for OT01A-->
 * bufferDelay (milliseconds): The bufferDelay defines the degradation of the experience based on the delay introudced in reception that in most of the cases will be based on the jitter of the network.
+<!-- use the stat "jitterBufferDelay" -->
+<!-- included for inbound IT01A6666 -->
 * fec (boolean): Defines if opus forward error correction was enabled or not to estimate the impact of packet loss in the quality of the experience.
 * dtx (boolean): Defines if opus discontinuous transmission was enabled or not to ignore the bitrate in that case and also include an small additional degradation in the calculations in this case.
-
-The audio input parameter with more impact in the algorithm is the packetLoss and should be included in most of the cases while the others are less critical to estimate the user experience.  The recommendation is to pass at least packetLoss and roundTripTime if possible.
-
-For video the relevant input parameters are these ones:
+<!-- use the stat "[codec]" -->
+<!-- included for outbound OT01A and inbound IT01A6666-->
+<!-- entries are like:
+\"opus (111, minptime=10;useinbandfec=1)\",
+or
+\"opus (111, minptime=10;sprop-stereo=0;stereo=0;usedtx=1;useinbandfec=1)\"
+so we need to search for the items "usedtx" and "useinbandfec" which aren't always there but when they are there it means they were in use
+-->
+## VIDEO
 * packetLoss (0-100%): The percentage of video packets lost.
+<!-- use the stat "fractionLost" -->
+<!-- included for remote inbound RIV-->
 * bitrate (0-200000 bps): The bitrate used for the video transmission.  Higher bitrates provides better quality. 
+<!--bitrate in bits per second (same unit as the output we already get)-->
+<!--we could add sent and recieved together apparently? not sure how best to handle this one-->
+<!-- bytesReceived_in_bits/s included for inbound IT01V, bytesSent_in_bits/s included for OT01V-->
 * roundTripTime (milliseconds): The roundTripTime defines the degradation of the experience based on the network delay.
+<!--included for remote inbound RIV-->
 * bufferDelay (milliseconds): The bufferDelay defines the degradation of the experience based on the delay introudced in reception that in most of the cases will be based on the jitter of the network.
+<!-- use the stat "jitterBufferDelay" -->
+<!-- included for inbound I01V-->
 * codec (VP8 / VP9 / H264): The more modern codecs can provide better quality for the same amount of bitrate.  The current version of the algorithm considers VP8 and H264 the same and assumes a ~20% improvement of encoding efficiency in case of VP9.
+<!-- *EDIT THIS* also include an efficiency improvement for video codec AV1 of 30%-->
+<!-- use stat [codec] included for outbound OT01V and inbound IT01V-->
+<!-- entries for outbound are like:
+"[\"VP9 (98, profile-id=0;useadaptivelayering=true;useadaptivelayering_v2=true)\",
+or 
+\"AV1 (45, level-idx=5;profile=0;tier=0;useadaptivelayering=true;useadaptivelayering_v2=true)\",
+need to search for the first part of the string at each entry could be AV1, VP9, VP8, H264 (this one is oldest I haven't seen it used but could theoretically be there)
+also not sure why but there are three different outbount ones with distinct IDs, two of them only have one entry, so I guess we just go with the long one/ the one whose ID matches the other IDs from video outbound stats
+-->
+<!--inbound entries are like:
+"[\"VP9 (98, profile-id=0)\-->
 * width / height (pixels): Resolution of the video being received
+<!-- I don't see this being used in the code! so maybe we need to alter a part to include?!-->
 * expectedWidth / expectedHeight (pixels): Resolution of the rendering window that is the ideal resolution that we would like to receive to not have to scale the video.  If this parameter is not known the algorithm assumes that the width and height of the received frames matches the expected resolution of the rendering window.
+<!--can use SV2-width and SV2-height
+or alternatively the second entry in the .txt file is    "origin": "https://meet.google.com", that includes an entry like:    
+"video": "{width: {ideal: 1280}, height: {ideal: 720}, 
+SV2-width and heigh are per second, I haven;t seen any where they change but theoretically they could -->
 * frameRate (frames per second): Frames received per second.  They are used to estimate the quality of the video.   A video at 5 fps requires less bitrate than a video at 30 fps for the same quality.
+<!-- use the stat "framesPerSecond"
+Included for both inbound IT01V and outbound OT01V-->
 * expectedFrameRate (frames per second): Frames per second that are expected to be receive.  This should usually be the frameRate of the source video (typically 30 fps).  If this parameter is not known the algorithm assumes that the frameRate received matches the expected framerate.
-
-The updated list of audio and video parameters can be checked in [the source code header] (https://github.com/ggarber/rtcscore/blob/develop/src/rtc_mos.js).
-
-### How to aggregate the scores of multiple streams or multiple periods of time
-
-In a typical scenario the quality scores are calculated every X seconds (f.e. every 30 seconds) and aggregated at the end of the call to provide a single score per user.  Having that unique final score requires a temporal aggregation of the scores as well as an aggregation of the scores of multiple streams in multipary use cases.
-
-This library doesn't provide any support to do those aggregations but doesn't impose any limitation either.   The most basic aggregation is the naive approach of averaging the scores but any other strategy like taking the worse 10% percentile can be implemented and provide reasonable results.
+<!-- use the stat "SV2-framesPerSecond", of type "media-source" -->
