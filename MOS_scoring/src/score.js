@@ -20,43 +20,43 @@
 
 function score(stats) {
 
-  const scores = {}; //An object to store the MOS scores for audio and video
+	const scores = {}; //An object to store the MOS scores for audio and video
 
-  const { audio, video } = normalize(stats); //uses the norm func (below) to fill-in and normalise missing stats
+  	const { audio, video } = normalize(stats); //uses the norm func (below) to fill-in and normalise missing stats
 
-  if (audio) { //calculate audio score (Audio MOS calculation is based on E-Model algorithm)
+  	if (audio) { //calculate audio score (Audio MOS calculation is based on E-Model algorithm)
 
-    const R0 = 100; //R initially set to 100 as an initial score to decrease from i think?
+		const R0 = 100; //R initially set to 100 as an initial score to decrease from i think?
 
-    // Delay:
-    const delay = 20 + audio.bufferDelay + audio.roundTripTime / 2;  // Assumes 20 packetization delay
-    
-    // Packet Loss:
-    const pl = audio.packetLoss; 
+		// Delay:
+		const delay = 20 + audio.bufferDelay + audio.roundTripTime / 2;  // Assumes 20 packetization delay
+		
+		// Packet Loss:
+		const pl = audio.packetLoss; 
 
-    // Equiptment Impairment factor (Ie):
-    const Ie = audio.dtx  // Ignore audio bitrate in dtx mode (DTX = Discontinuous Transmission mode)
-      ? 8                 // if dtx is on, Ie is set to 8
-      : audio.bitrate     // elif a bitrate is provided in the audio stats, a log function (next line) is used to calc Ie
-      ? clamp(55 - 4.6 * Math.log(audio.bitrate), 0, 30) 
-      : 6                 // else, defaults to 6
-    ;                
-    // Packet-loss robustness Factor:
-    const Bpl = audio.fec ? 20 : 10;  //20 if Forward Error Correction (FEC) is on, else 10
+		// Equiptment Impairment factor (Ie):
+		const Ie = audio.dtx  // Ignore audio bitrate in dtx mode (DTX = Discontinuous Transmission mode)
+		? 8                 // if dtx is on, Ie is set to 8
+		: audio.bitrate     // elif a bitrate is provided in the audio stats, a log function (next line) is used to calc Ie
+		? clamp(55 - 4.6 * Math.log(audio.bitrate), 0, 30) 
+		: 6;                // else, defaults to 6
 
-    // Impairment due to Packet Loss:
-    const Ipl = Ie + (100 - Ie) * (pl / (pl + Bpl)); //calc based on Ie and packet loss
+		// Packet-loss robustness Factor:
+		const Bpl = audio.fec ? 20 : 10;  //20 if Forward Error Correction (FEC) is on, else 10
 
-    // Delay Impairment: 
-    const Id = delay * 0.03 + (delay > 150 ? 0.1 * (delay - 150) : 0); //Delays greater than 150ms are penalised more (exceeding human reaction time?)
-    
-    // Calculating R (rating):
-    const R = clamp(R0 - Ipl - Id, 0, 100); // rating is calculated as 100 - impairments due to delay and packetloss. bounded between 0 and 100
-    
-    // Calculating MOS:
-    const MOS = 1 + 0.035 * R + (R * (R - 60) * (100 - R) * 7) / 1000000; //non-linear mapping of R(range 0-100) onto MOS (range 1-5)--> these coefficients are the ones fitted through experiments?
-    scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5); //round the MOS score to two decimal places, bound between 1 and 5
-  }
+		// Impairment due to Packet Loss:
+		const Ipl = Ie + (100 - Ie) * (pl / (pl + Bpl)); //calc based on Ie and packet loss
+
+		// Delay Impairment: 
+		const Id = delay * 0.03 + (delay > 150 ? 0.1 * (delay - 150) : 0); //Delays greater than 150ms are penalised more (exceeding human reaction time? Assuming 150ms min latency?)
+		
+		// Calculating R (rating):
+		const R = clamp(R0 - Ipl - Id, 0, 100); // rating is calculated as 100 - impairments due to delay and packetloss. bounded between 0 and 100
+		
+		// Calculating MOS:
+		const MOS = 1 + 0.035 * R + (R * (R - 60) * (100 - R) * 7) / 1000000; //non-linear mapping of R(range 0-100) onto MOS (range 1-5)--> these coefficients are the ones fitted through experiments?
+		scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5); //round the MOS score to two decimal places, bound between 1 and 5
+	}
 
   if (video) {  // Calculate video score 
 
