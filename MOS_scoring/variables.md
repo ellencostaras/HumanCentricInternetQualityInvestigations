@@ -33,7 +33,7 @@ so we need to search for the items "usedtx" and "useinbandfec" which aren't alwa
 <!--included for remote inbound RIV-->
 * bufferDelay (milliseconds): The bufferDelay defines the degradation of the experience based on the delay introudced in reception that in most of the cases will be based on the jitter of the network.
 <!-- use the stat "jitterBufferDelay" -->
-<!-- included for inbound I01V-->
+<!-- included for inbound IT01V-->
 * codec (AV1/ VP8 / VP9 / H264): The more modern codecs can provide better quality for the same amount of bitrate.  The current version of the algorithm considers VP8 and H264 the same and assumes a ~20% improvement of encoding efficiency in case of VP9.
 <!-- *EDIT THIS* also include an efficiency improvement for video codec AV1 of 30%-->
 <!-- use stat [codec] included inbound IT01V-->
