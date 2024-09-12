@@ -9,7 +9,7 @@
 <!--bitrate in bits per second (same unit as the output we already get)-->
 <!-- bytesReceived_in_bits/s included for inbound IT01A6666-->
 * bufferDelay (milliseconds): The bufferDelay defines the degradation of the experience based on the delay introudced in reception that in most of the cases will be based on the jitter of the network.
-<!-- use the stat "jitterBufferDelay" -->
+<!-- use the stat "[jitterBufferDelay/jitterBufferEmittedCount_in_ms]" -->
 <!-- included for inbound IT01A6666 -->
 * fec (boolean): Defines if opus forward error correction was enabled or not to estimate the impact of packet loss in the quality of the experience.
 * dtx (boolean): Defines if opus discontinuous transmission was enabled or not to ignore the bitrate in that case and also include an small additional degradation in the calculations in this case.
@@ -32,7 +32,7 @@ so we need to search for the items "usedtx" and "useinbandfec" which aren't alwa
 * roundTripTime (milliseconds): The roundTripTime defines the degradation of the experience based on the network delay.
 <!--included for remote inbound RIV-->
 * bufferDelay (milliseconds): The bufferDelay defines the degradation of the experience based on the delay introudced in reception that in most of the cases will be based on the jitter of the network.
-<!-- use the stat "jitterBufferDelay" -->
+<!-- use the stat "[jitterBufferDelay/jitterBufferEmittedCount_in_ms]" -->
 <!-- included for inbound IT01V-->
 * codec (AV1/ VP8 / VP9 / H264): The more modern codecs can provide better quality for the same amount of bitrate.  The current version of the algorithm considers VP8 and H264 the same and assumes a ~20% improvement of encoding efficiency in case of VP9.
 <!-- *EDIT THIS* also include an efficiency improvement for video codec AV1 of 30%-->
@@ -48,7 +48,7 @@ also not sure why but there are three different outbount ones with distinct IDs,
 "[\"VP9 (98, profile-id=0)\-->
 * width / height (pixels): Resolution of the video being received
 <!-- stats frameWidth and frameHeight inbound IT01V
-I don't see this being used in the code! so maybe we need to alter a part to include?! *EDIT THIS*-->
+Edited the code to include -->
 * expectedWidth / expectedHeight (pixels): Resolution of the rendering window that is the ideal resolution that we would like to receive to not have to scale the video.  If this parameter is not known the algorithm assumes that the width and height of the received frames matches the expected resolution of the rendering window.
 <!--can use SV2-width and SV2-height
 or alternatively the second entry in the .txt file is "origin": "https://meet.google.com", that includes an entry like:    
