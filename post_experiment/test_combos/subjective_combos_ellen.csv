@@ -1,4 +1,4 @@
-'treatment','upload','download','rtt'
+Treatment,Upload,Download,Latency
 1,50000,100000,50
 2,50000,100000,50
 3,50000,100000,50
