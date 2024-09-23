@@ -1,4 +1,4 @@
-ID,avg_up_ellen,avg_down_ellen,avg_rtt_ellen,avg_ellen_jitter,avg_pl_ellen,avg_up_aadya,avg_down_aadya,avg_rtt_aadya,avg_jitter_aadya,avg_pl_aadya,sd_up_ellen,sd_down_ellen,sd_rtt_ellen,sd_jitter_ellen,sd_pl_ellen,sd_up_aadya,sd_down_aadya,sd_rtt_aadya,sd_jitter_aadya,sd_pl_aadya,avg_down_google,avg_up_google,avg_rtt_google,sd_down_google,sd_up_google,sd_rtt_google
+ID,avg_up_ellen,avg_down_ellen,avg_rtt_ellen,avg_jitter_ellen,avg_pl_ellen,avg_up_aadya,avg_down_aadya,avg_rtt_aadya,avg_jitter_aadya,avg_pl_aadya,sd_up_ellen,sd_down_ellen,sd_rtt_ellen,sd_jitter_ellen,sd_pl_ellen,sd_up_aadya,sd_down_aadya,sd_rtt_aadya,sd_jitter_aadya,sd_pl_aadya,avg_down_google,avg_up_google,avg_rtt_google,sd_down_google,sd_up_google,sd_rtt_google
 colac1,2.20,26.50,32.67,24.33,0.24,3.08,40.00,31.00,13.67,0.00,0.51,5.96,4.51,4.16,0.41,1.31,12.41,3.61,5.51,0.00,5.82,1.10,61.49,0.29,0.04,11.10
 colac2,1.26,12.09,34.67,29.00,0.00,1.00,5.60,43.67,49.33,0.00,0.51,9.46,9.07,13.53,0.00,0.40,4.62,10.21,40.08,0.00,5.82,1.10,61.49,0.85,0.04,11.10
 colac3,6.54,43.83,28.33,8.00,0.00,4.81,11.65,30.67,13.00,0.15,2.31,2.89,0.58,2.00,0.00,0.87,5.72,7.77,6.24,0.27,5.82,1.10,61.49,0.85,0.04,11.10
