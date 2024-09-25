@@ -1,4 +1,4 @@
-# DesktopDownthrottlingExperiment 
+# DesktopDownthrottlingExperiment OUTDATED
 
 Welcome to Experiment 1 of our Honours Project! This is a working space.
 
