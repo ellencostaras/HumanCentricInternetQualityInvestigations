@@ -1,6 +1,6 @@
-# DesktopDownthrottlingExperiment OUTDATED
+# Human Centric Internet Quality Investigation
 
-Welcome to Experiment 1 of our Honours Project! This is a working space.
+Welcome to the living appendix for our thing
 
 Inside this repository you will find two shell scripts, and two folders: <br><br>
 
