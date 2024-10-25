@@ -1,9 +1,11 @@
 # Human Centric Internet Quality Investigation
 
-Welcome to the living appendix for our thing
+Welcome to the living appendix for 'Are Australian Metrics of Internet Quality Sufficiently Human-Centirc?',
+a thesis submitted to the Faculty of Science, Monash University for the degree of Bachelor of Science Advanced - Global Challenges (Honours). 
 
-Inside this repository you will find two shell scripts, and two folders: <br><br>
+Authors: Ellen Costaras, Aadya Mishra, Aden Strong. 
 
+This repository includes all of the code, raw data, cleaned data, and analysis for Chapters 2, 4, and 5 of the thesis, and all of the code from Chapter 3. 
 
 ## Pre-experiment folder:
 This folder houses all the files involved in setting up the experiment. This includes:<br><br>
