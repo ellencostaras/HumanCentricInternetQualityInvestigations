@@ -18,7 +18,7 @@ This folder houses code and data from Chapters 2, 4 and 5. This includes:
 ## Latency Data Analysis folder:
 
 This folder includes the scripts for analysing data from Chapter 3. It does not include the data itself. This includes:
-- 'ADM_to_LGA.ipynb', the initial treatment of Monash IP Observatory data and conversion to LGA subdivision
+- 'adm_to_lga.ipynb', the initial treatment of Monash IP Observatory data and conversion to LGA subdivision
 - 'linear_regression.ipynb', the spatial join of independent variables
 - 'normalcy_check.ipynb', the check that data does not violate linear assumptions
 - 'latency_regression_trimmed.ipynb', the regression analysis of latency correlates
